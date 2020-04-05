@@ -1,0 +1,422 @@
+swagger: '2.0'
+info:
+  description: MTCT
+  version: 1.0.0
+  title: MTCT swagger
+host: 'localhost:3000'
+basePath: /v1
+tags:
+  - name: user
+    description: Operations about user
+  - name: fund
+    description: Operations about fund
+  - name: asset
+    description: Operations about asset
+schemes:
+  - http
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+    description: Requests should pass an api_key header.
+    
+security: 
+ - api_key: []  
+paths:
+  /asset:
+    get:
+      tags:
+        - asset
+      summary: Get all assets
+      description: ''
+      operationId: getAllAssets
+      produces:
+        - application/xml
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Asset'
+      x-swagger-router-controller: Asset
+    post:
+      tags:
+        - asset
+      summary: Create new asset
+      description: ''
+      operationId: createAsset
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: asset object that needs to be added to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Asset'
+      responses:
+        '405':
+          description: Invalid input
+      x-swagger-router-controller: Asset
+  '/asset/{id}':
+    get:
+      tags:
+        - asset
+      summary: Get asset by id
+      description: ''
+      operationId: getAssetById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The asset id that needs to be fetched.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Asset'
+        '400':
+          description: Invalid asset id supplied
+        '404':
+          description: Asset not found
+      x-swagger-router-controller: Asset
+  /fund:
+    get:
+      tags:
+        - fund
+      summary: Get all funds
+      description: ''
+      operationId: getAllFunds
+      produces:
+        - application/xml
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Fund'
+      x-swagger-router-controller: Fund
+    post:
+      tags:
+        - fund
+      summary: Create new fund
+      description: ''
+      operationId: createFund
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: fund object that needs to be added to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Fund'
+      responses:
+        '405':
+          description: Invalid input
+      x-swagger-router-controller: Fund
+  '/fund/{id}':
+    get:
+      tags:
+        - fund
+      summary: Get fund by id
+      description: ''
+      operationId: getFundById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The fund id that needs to be fetched.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Fund'
+        '400':
+          description: Invalid fund id supplied
+        '404':
+          description: Fund not found
+      x-swagger-router-controller: Fund
+    delete:
+      tags:
+        - fund
+      summary: Delete fund by ID
+      description: Delete fund by ID
+      operationId: deleteFund
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of the fund that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: fund not found
+      x-swagger-router-controller: Fund
+  '/fund/buy':
+    post:
+      tags:
+        - fund
+      summary: buy fund
+      description: ''
+      operationId: buyFund
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: Buy fund.
+          required: true
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              sellerId:
+                type: string
+              buyerId:
+                type: string          
+      responses:
+        '405':
+          description: Invalid input
+      x-swagger-router-controller: Fund
+  '/fund/sell/':
+    post:
+      tags:
+        - fund
+      summary: sell fund
+      description: ''
+      operationId: sellFund
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Sell fund.
+          required: true
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              sellerId:
+                type: string
+              buyerId:
+                type: string
+      responses:
+        '405':
+          description: Invalid input
+      x-swagger-router-controller: Fund
+  /user:
+    get:
+      tags:
+        - user
+      summary: Get all users
+      description: ''
+      operationId: getAllUsers
+      produces:
+        - application/xml
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+      x-swagger-router-controller: User
+    post:
+      tags:
+        - user
+      summary: Add a new user
+      description: ''
+      operationId: addUser
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User object that needs to store
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '405':
+          description: Invalid input
+      x-swagger-router-controller: User
+  /user/approve:
+    patch:
+      tags:
+        - user
+      summary: Approve user
+      description: ''
+      operationId: approveUser
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User that needs to approved
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+      responses:
+        '405':
+          description: Invalid input
+      x-swagger-router-controller: User
+  /user/reject:
+    patch:
+      tags:
+        - user
+      summary: Reject user
+      description: ''
+      operationId: rejectUser
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User that needs to be rejected
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+      responses:
+        '405':
+          description: Invalid input
+      x-swagger-router-controller: User
+  '/user/{id}':
+    get:
+      tags:
+        - user
+      summary: Get user by user id
+      description: ''
+      operationId: getUserById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The user id that needs to be fetched.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Invalid user id supplied
+        '404':
+          description: User not found
+      x-swagger-router-controller: User
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      orgId:
+        type: string
+      orgName:
+        type: string
+      orgType:
+        type: string
+      role:
+        type: string
+    xml:
+      name: User
+    example:
+      orgType: orgType
+      orgName: orgName
+      name: name
+      id: id
+      userType: userType
+      orgId: orgId
+  Asset:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      assetType:
+        type: string
+    xml:
+      name: Asset
+    example:
+      name: name
+      id: id
+      assetType: assetType
+  Fund:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      count:
+        type: integer
+      assets:
+        type: array
+        items:
+          type: string
+    xml:
+      name: Fund
+    example:
+      assets: ["name"]
+      name: name
+      count: 0
+      id: id
