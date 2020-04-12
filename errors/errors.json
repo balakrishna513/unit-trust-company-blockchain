@@ -59,8 +59,16 @@
         "message": "USER_NOT_AUTHORIZED",
         "code": 401
     },
-    "IDENTITY_NOF_FOUND":{
+    "IDENTITY_NOF_FOUND": {
         "message": "INVALID_USER_TOKEN",
         "code": 401
+    },
+    "FUND_UPDATE_FAILED": {
+        "message": "Failed to update funds",
+        "code": 400
+    },
+    "INSUFFICENT_FUND": {
+        "message": "Insufficient funds error",
+        "code": 400
     }
 }

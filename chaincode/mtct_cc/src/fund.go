@@ -18,6 +18,8 @@ const (
 	FUND_DELETE_FAILED = "FUND_DELETE_FAILED"
 	FUND_SELL_FAILED   = "FUND_SELL_FAILED"
 	BUY_FUND_FAILED    = "BUY_FUND_FAILED"
+	INSUFFICENT_FUND   = "INSUFFICENT_FUND"
+	FUND_UPDATE_FAILED = "FUND_UPDATE_FAILED"
 )
 
 //Fund struct
@@ -168,6 +170,59 @@ func (s *SmartContract) QueryAllFunds(ctx contractapi.TransactionContextInterfac
 	}
 
 	return results, nil
+}
+
+// increaseFundCount
+func (s *SmartContract) sellFund(ctx contractapi.TransactionContextInterface, fundId string) error {
+	fmt.Println("increaseFundCount ...", fundId)
+
+	//check fund already exists before
+	fund, err := s.GetFund(ctx, fundId)
+	if err != nil {
+		return err
+	}
+
+	//Updating fund count
+	fund.count = fund.count + 1
+
+	assetAsBytes, err := json.Marshal(fund)
+	if err != nil {
+		fmt.Errorf("Failed to serialize fund data. %s", err.Error())
+		return fmt.Errorf(FUND_CREATE_FAILED)
+	}
+
+	key, _ := ctx.GetStub().CreateCompositeKey(FUND_OBJECT_TYPE, []string{fund.ID})
+	fmt.Println("key::", key)
+	return ctx.GetStub().PutState(key, assetAsBytes)
+}
+
+// buyFund
+func (s *SmartContract) buyFund(ctx contractapi.TransactionContextInterface, fundId string) error {
+	fmt.Println("decreaseFundCount ...", fundId)
+
+	//check fund already exists before
+	fund, err := s.GetFund(ctx, fundId)
+	if err != nil {
+		return err
+	}
+
+	//Updating fund count
+	if fund.count < 1 {
+		fmt.Errorf("Failed to serialize fund data. %s", err.Error())
+		return fmt.Errorf(INSUFFICENT_FUND)
+	}
+
+	fund.count = fund.count - 1
+
+	assetAsBytes, err := json.Marshal(fund)
+	if err != nil {
+		fmt.Errorf("Failed to serialize fund data. %s", err.Error())
+		return fmt.Errorf(FUND_UPDATE_FAILED)
+	}
+
+	key, _ := ctx.GetStub().CreateCompositeKey(FUND_OBJECT_TYPE, []string{fund.ID})
+	fmt.Println("key::", key)
+	return ctx.GetStub().PutState(key, assetAsBytes)
 }
 
 func deleteFromSlice(list []string, item string) []string {

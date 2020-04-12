@@ -222,6 +222,12 @@ func (s *SmartContract) BuyFund(ctx contractapi.TransactionContextInterface, fun
 	//Updating user funds list with new fund id
 	user.Funds = append(user.Funds, fundId)
 
+	//update funds
+	err = s.buyFund(ctx, fundId)
+	if err != nil {
+		return fmt.Errorf(BUY_FUND_FAILED)
+	}
+
 	// Serializing user object
 	userAsBytes, err := json.Marshal(user)
 	if err != nil {
@@ -286,6 +292,12 @@ func (s *SmartContract) SellFund(ctx contractapi.TransactionContextInterface, fu
 	err = ctx.GetStub().PutState(key, userAsBytes)
 	if err != nil {
 		fmt.Errorf("Failed to update user data. %s", err.Error())
+		return fmt.Errorf(FUND_SELL_FAILED)
+	}
+
+	//update funds
+	err = s.sellFund(ctx, fundId)
+	if err != nil {
 		return fmt.Errorf(FUND_SELL_FAILED)
 	}
 
