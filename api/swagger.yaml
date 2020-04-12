@@ -383,7 +383,7 @@ definitions:
       orgName: orgName
       name: name
       id: id
-      userType: userType
+      role: agent
       orgId: orgId
   Asset:
     type: object
