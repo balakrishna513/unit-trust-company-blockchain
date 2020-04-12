@@ -3,3 +3,5 @@ chaincode/mtct_cc/vendor/*
 chaincode/mtct_cc/pkg/*
 chaincode/mtct_cc/src/vendor/*
 wallet/*
+chaincode/mtct_cc/src/go
+chaincode/mtct_cc/src/go
