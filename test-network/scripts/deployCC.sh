@@ -15,12 +15,15 @@ CC_SRC_LANGUAGE=`echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:]`
 
 FABRIC_CFG_PATH=$PWD/config/
 
+VERSION=3
+echo "VERISON::"$VERSION
+
 if [ "$CC_SRC_LANGUAGE" = "go" -o "$CC_SRC_LANGUAGE" = "golang" ] ; then
 	CC_RUNTIME_LANGUAGE=golang
-	CC_SRC_PATH="../chaincode/mtct_cc/"
+	CC_SRC_PATH="../chaincode/mtct_cc/src"
 
 	echo Vendoring Go dependencies ...
-	pushd ../chaincode/mtct_cc
+	pushd ../chaincode/mtct_cc/src
 	GO111MODULE=on go mod vendor
 	popd
 	echo Finished vendoring Go dependencies
