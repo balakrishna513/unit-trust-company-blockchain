@@ -25,7 +25,7 @@ exports.invoke = async function (requestObject, user) {
         let identity = await commonUtil.getIdentity(wallet, user);
         if (!identity) {
             console.log(`An identity for the user ${user} does not exist in the wallet`);
-            return;
+            throw new Error("IDENTITY_NOF_FOUND");
         }
 
         // Create a new gateway for connecting to our peer node.
@@ -50,7 +50,13 @@ exports.invoke = async function (requestObject, user) {
         await gateway.disconnect();
         return response;
     } catch (error) {
-        console.error(`Failed to submit transaction: ${error}`);
+        console.error(`\n\n Failed to submit transaction: ${error}`);
+        if(error.responses && error.responses[0] && error.responses[0].response.message) {
+            error = error.responses[0].response.message;
+        }else{
+            error = error.message;
+        }
+        //error = (error.responses[0] && error.responses[0].response.message) ? error.responses[0].response.message : error.message;
         throw error;
     }
 }

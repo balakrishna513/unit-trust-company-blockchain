@@ -2,6 +2,7 @@
 
 var utils = require('../utils/writer.js');
 var Fund = require('../service/FundService');
+var Errors = require('../errors/errors.json');
 
 module.exports.createFund = async function createFund(req, res, next) {
   var body = req.swagger.params['body'].value;
@@ -11,7 +12,10 @@ module.exports.createFund = async function createFund(req, res, next) {
     utils.writeJson(res, response);
   } catch (error) {
     console.log("Failed to create fund. Error:", error);
-    utils.writeJson(res, error);
+    if(Errors[error])
+      utils.writeJson(res, utils.respondWithCode(Errors[error].code, Errors[error]));
+    else
+      utils.writeJson(res, error);
   }
 };
 

@@ -3,61 +3,63 @@
 var utils = require('../utils/writer.js');
 var User = require('../service/UserService');
 
-module.exports.addUser = function addUser (req, res, next) {
+module.exports.addUser = async function addUser(req, res, next) {
   var body = req.swagger.params['body'].value;
   let user = req.headers['api_key'];
-  User.addUser(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+
+  try {
+    const response = await User.addUser(body, user);
+    utils.writeJson(res, response);
+  } catch (error) {
+    console.log("Error:", error)
+    utils.writeJson(res, error);
+  }
 };
 
-module.exports.approveUser = function approveUser (req, res, next) {
+module.exports.approveUser = async function approveUser(req, res, next) {
   var body = req.swagger.params['body'].value;
   let user = req.headers['api_key'];
-  User.approveUser(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+
+  try {
+    const response = await User.approveUser(body, user);
+    utils.writeJson(res, response);
+  } catch (error) {
+    console.log("Error:", error)
+    utils.writeJson(res, error);
+  }
 };
 
-module.exports.getAllUsers = function getAllUsers (req, res, next) {
+module.exports.getAllUsers = async function getAllUsers(req, res, next) {
   let user = req.headers['api_key'];
-  User.getAllUsers()
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  try {
+    const response = await User.getAllUsers(user);
+    return utils.writeJson(res, response);
+  } catch (error) {
+    console.log("Error:", error)
+    return utils.writeJson(res, []);
+  }
 };
 
-module.exports.getUserById = function getUserById (req, res, next) {
+module.exports.getUserById = async function getUserById(req, res, next) {
   let user = req.headers['api_key'];
   var id = req.swagger.params['id'].value;
-  User.getUserById(id)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  try {
+    const response = await User.getUserById(id, user);
+    utils.writeJson(res, response);
+  } catch (error) {
+    console.log("Error:", error)
+    utils.writeJson(res, error);
+  }
 };
 
-module.exports.rejectUser = function rejectUser (req, res, next) {
+module.exports.rejectUser = async function rejectUser(req, res, next) {
   let user = req.headers['api_key'];
   var body = req.swagger.params['body'].value;
-  User.rejectUser(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  try {
+    const response = await User.rejectUser(body, user);
+    utils.writeJson(res, response);
+  } catch (error) {
+    console.log("Error:", error)
+    utils.writeJson(res, error);
+  }
 };

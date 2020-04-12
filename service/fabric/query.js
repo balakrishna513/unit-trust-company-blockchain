@@ -44,9 +44,16 @@ exports.query = async function(requestObject, user) {
         
         const result = await contract.evaluateTransaction(requestObject.funcName, Object.values(requestObject.args));
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        console.log('result end..........');
         return result ? JSON.parse(result): result;
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
+        if(error.responses && error.responses[0] && error.responses[0].response.message) {
+            error = error.responses[0].response.message;
+        }else{
+            error = error.message;
+        }
+        //error = (error.responses[0] && error.responses[0].response.message) ? error.responses[0].response.message : error.message;
         throw error;
     }
 }

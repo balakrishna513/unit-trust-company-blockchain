@@ -1,0 +1,66 @@
+{
+    "USER_CREATE_FAILED": {
+        "message": "Failed to create user.",
+        "code": 500
+    },
+    "USER_UPDATE_FAILED": {
+        "message": "Failed to update user.",
+        "code": 500
+    },
+    "USER_NOT_FOUND": {
+        "message": "User not found",
+        "code": 404
+    },
+    "USER_RETRIVAL_FAILED": {
+        "message": "Failed to fetch user data",
+        "code": 500
+    },
+    "USER_DO_NOT_HAVE_FUND": {
+        "message": "User do not hold the fund",
+        "code": 400
+    },
+    "ASSET_NOT_FOUND": {
+        "message": "Asset do not exists",
+        "code": 404
+    },
+    "ASSET_CREATE_FAILED": {
+        "message": "Asset creation failed",
+        "code": 500
+    },
+    "BAD_REQUEST": {
+        "message": "BAD_REQUEST",
+        "code": 400
+    },
+    "SERVER_ERROR": {
+        "message": "Server error",
+        "code": 500
+    },
+    "FUND_CREATE_FAILED": {
+        "message": "Faild to create fund",
+        "code": 500
+    },
+    "FUND_NOT_FOUND": {
+        "message": "Fund do not exists",
+        "code": 404
+    },
+    "FUND_DELETE_FAILED": {
+        "message": "Failed to delete fund",
+        "code": 500
+    },
+    "FUND_SELL_FAILED": {
+        "message": "Failed to delete fund",
+        "code": 500
+    },
+    "BUY_FUND_FAILED": {
+        "message": "Failed to buy fund",
+        "code": 500
+    },
+    "USER_NOT_AUTHORIZED": {
+        "message": "USER_NOT_AUTHORIZED",
+        "code": 401
+    },
+    "IDENTITY_NOF_FOUND":{
+        "message": "INVALID_USER_TOKEN",
+        "code": 401
+    }
+}

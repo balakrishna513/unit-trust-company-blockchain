@@ -1,3 +1,5 @@
-node_modules
-chaincode/mtct_cc/vendor
-
+node_modules/*
+chaincode/mtct_cc/vendor/*
+chaincode/mtct_cc/pkg/*
+chaincode/mtct_cc/src/vendor/*
+wallet/*
